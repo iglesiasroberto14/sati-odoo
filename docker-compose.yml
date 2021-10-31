@@ -1,0 +1,17 @@
+services:
+    db:
+        image: postgres:14
+        environment:
+            - POSTGRES_USER=odoo
+            - POSTGRES_PASSWORD=odoo
+            - POSTGRES_DB=postgres
+            - PGDATA=/var/lib/postgresql/odoo
+        volumes:
+            - pg_data:/var/lib/postgresql/odoo
+        #network_mode: "host"
+    odoo:
+        image: riglesias-odoo
+        ports:
+          - "8069"
+volumes:
+    pg_data:
