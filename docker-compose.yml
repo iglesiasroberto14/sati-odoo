@@ -1,17 +1,25 @@
 services:
-    db:
-        image: postgres:14
-        environment:
-            - POSTGRES_USER=odoo
-            - POSTGRES_PASSWORD=odoo
-            - POSTGRES_DB=postgres
-            - PGDATA=/var/lib/postgresql/odoo
-        volumes:
-            - pg_data:/var/lib/postgresql/odoo
-        #network_mode: "host"
-    odoo:
-        image: riglesias-odoo
-        ports:
-          - "8069"
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/odoo
+    volumes:
+      - pg_data:/var/lib/postgresql/odoo
+  odoo:
+    image: odoo-sati:latest
+    volumes:
+      - odoo_data:/var/lib/odoo
+      - odoo_addons:/mnt/extra-addons
+      - odoo_argentina:/mnt/odoo-argentina
+      - odoo_conf:/etc/odoo/
+    ports:
+      - 8069:8069
 volumes:
-    pg_data:
+  pg_data:
+  odoo_data:
+  odoo_addons:
+  odoo_argentina:
+  odoo_conf:
