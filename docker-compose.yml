@@ -1,13 +1,4 @@
 services:
-  db:
-    image: postgres:14
-    environment:
-      - POSTGRES_USER=odoo
-      - POSTGRES_PASSWORD=odoo
-      - POSTGRES_DB=postgres
-      - PGDATA=/var/lib/postgresql/odoo
-    volumes:
-      - pg_data:/var/lib/postgresql/odoo
   odoo:
     image: odoo-sati:latest
     volumes:
@@ -17,9 +8,28 @@ services:
       - odoo_conf:/etc/odoo/
     ports:
       - 8069:8069
+    depends_on: 
+      - db
+    restart: always
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/odoo
+    volumes:
+      - pg_data:/var/lib/postgresql/odoo
+    restart: always
 volumes:
   pg_data:
+    external: true
   odoo_data:
+    external: true
   odoo_addons:
+    external: true
   odoo_argentina:
+    external: true
   odoo_conf:
+    external: true
